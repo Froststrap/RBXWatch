@@ -2,11 +2,11 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
-cmd = "go build -o ./tmp/rbxwatch ."
-bin = "./tmp/rbxwatch"
-full_bin = "./tmp/rbxwatch"
-include_ext = ["go"]
-exclude_dir = ["tmp", ".git", "vendor"]
+cmd = "cargo build"
+bin = "./target/debug/rbxwatch"
+full_bin = "./target/debug/rbxwatch"
+include_ext = ["rs", "toml"]
+exclude_dir = ["target", "tmp", ".git"]
 delay = 500
 stop_on_error = true
 send_interrupt = true

@@ -7,13 +7,15 @@ config/
 .env
 .env.*
 
-# Go build output
+# Build output
 /dist/
 tmp/
 
-# Go test / coverage
+# Test / coverage
 coverage.out
 coverage.html
+
+target/
 
 # OS files
 .DS_Store

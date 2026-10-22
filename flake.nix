@@ -1,17 +1,22 @@
 {
-  description = "Roblox Tracker Bot";
+  description = "Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/26.05";
+    self.submodules = true;
   };
 
   outputs =
     {
-      self,
-      nixpkgs,
       flake-utils,
-    }:
+      nixpkgs,
+      ...
+    }@inputs:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
@@ -20,18 +25,20 @@
         };
       in
       {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            air
+        devShells =
+          let
+            inherit (pkgs.callPackage ./nix/devshell-tools.nix { })
+              mkComposedShell
+              ;
 
-            go
-            gopls
-            gotools
-            golangci-lint
-            delve
-
-          ];
-        };
+            extraFrag = pkgs.callPackage ./nix/extra.nix { };
+            rustFrag = (pkgs.callPackage ./nix/rustDevShell.nix { }) inputs;
+          in
+          mkComposedShell [ rustFrag ] { }
+          // mkComposedShell [
+            rustFrag
+            extraFrag
+          ] { nameOverride = "default"; };
       }
     );
 }

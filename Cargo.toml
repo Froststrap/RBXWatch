@@ -1,0 +1,48 @@
+[package]
+name = "rbxwatch"
+version = "0.2.0"
+edition = "2024"
+license = "MPL-2.0"
+
+[dependencies]
+chrono-tz = "0.10"
+dotenvy = "0.15"
+regex = "1"
+scraper = "0.29"
+serde_json = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+twilight-gateway = "0.17"
+twilight-http = "0.17"
+twilight-model = "0.17"
+
+[dependencies.chrono]
+version = "0.4"
+default-features = false
+features = ["std", "clock"]
+
+[dependencies.reqwest]
+version = "0.12"
+default-features = false
+features = ["json", "rustls-tls"]
+
+[dependencies.serde]
+version = "1"
+features = ["derive"]
+
+[dependencies.twilight-util]
+version = "0.17"
+features = ["builder"]
+
+[dependencies.rustls]
+version = "0.23"
+features = ["ring"]
+
+[dependencies.tokio]
+version = "1.54"
+features = ["macros", "rt-multi-thread", "signal", "time"]
+
+[dev-dependencies.tokio]
+version = "1.54"
+features = ["io-util", "net"]
